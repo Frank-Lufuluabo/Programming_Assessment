@@ -1,92 +1,92 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package za.ac.cput;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test class for SinglyLinkedList
  *
- * @author User
+ * @author Frank
  */
 public class SinglyLinkedListTest {
-    
-    public SinglyLinkedListTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
+    private SinglyLinkedList list;
+
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        list = new SinglyLinkedList();
     }
 
-    /**
-     * Test of insert method, of class SinglyLinkedList.
-     */
     @Test
     public void testInsert() {
-        System.out.println("insert");
-        int data = 0;
-        SinglyLinkedList instance = new SinglyLinkedList();
-        instance.insert(data);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        list.insert(10);
+        list.insert(20);
+        list.insert(30);
+
+        assertTrue("List should contain 10", list.search(10));
+        assertTrue("List should contain 20", list.search(20));
+        assertTrue("List should contain 30", list.search(30));
     }
 
-    /**
-     * Test of delete method, of class SinglyLinkedList.
-     */
     @Test
-    public void testDelete() {
-        System.out.println("delete");
-        int key = 0;
-        SinglyLinkedList instance = new SinglyLinkedList();
-        instance.delete(key);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSearchElementFound() {
+        list.insert(5);
+        list.insert(15);
+        list.insert(25);
+
+        assertTrue("Search should find 15", list.search(15));
     }
 
-    /**
-     * Test of search method, of class SinglyLinkedList.
-     */
     @Test
-    public void testSearch() {
-        System.out.println("search");
-        int key = 0;
-        SinglyLinkedList instance = new SinglyLinkedList();
-        boolean expResult = false;
-        boolean result = instance.search(key);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSearchElementNotFound() {
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+
+        assertFalse("Search should not find 99", list.search(99));
     }
 
-    /**
-     * Test of printList method, of class SinglyLinkedList.
-     */
     @Test
-    public void testPrintList() {
-        System.out.println("printList");
-        SinglyLinkedList instance = new SinglyLinkedList();
-        instance.printList();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testDeleteHead() {
+        list.insert(100);
+        list.insert(200);
+        list.insert(300);
+
+        list.delete(100); // delete head
+
+        assertFalse("Head element 100 should be deleted", list.search(100));
+        assertTrue("List should still contain 200", list.search(200));
+        assertTrue("List should still contain 300", list.search(300));
     }
-    
+
+    @Test
+    public void testDeleteMiddleElement() {
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+
+        list.delete(2); // delete middle
+
+        assertFalse("Element 2 should be deleted", list.search(2));
+        assertTrue("Element 1 should remain", list.search(1));
+        assertTrue("Element 3 should remain", list.search(3));
+    }
+
+    @Test
+    public void testDeleteNonExistentElement() {
+        list.insert(10);
+        list.insert(20);
+
+        list.delete(99); // does not exist
+
+        assertTrue("Element 10 should still exist", list.search(10));
+        assertTrue("Element 20 should still exist", list.search(20));
+    }
+
+    @Test
+    public void testDeleteFromEmptyList() {
+        list.delete(50); // deleting from empty list should not break
+        assertFalse("Empty list should not contain 50", list.search(50));
+    }
 }
