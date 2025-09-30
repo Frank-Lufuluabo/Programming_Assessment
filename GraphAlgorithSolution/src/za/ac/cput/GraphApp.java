@@ -21,9 +21,8 @@ public class GraphApp {
             // Enter city names
             System.out.println("Enter city names:");
             for (int i = 0; i < n; i++) {
-                System.out.print("City " + (i + 1) + ": ");
-                String city = sc.nextLine().trim();
-                graph.setCity(i, city);
+                System.out.print("City " + i + ": ");
+                graph.cities[i] = sc.nextLine();
             }
 
             // Enter roads (edges)
@@ -31,31 +30,27 @@ public class GraphApp {
             int roads = sc.nextInt();
             sc.nextLine();
 
-            System.out.println("Enter roads (format: CityName1 CityName2):");
+            System.out.println("Enter each roads as : city1 Index city2 Index:");
             for (int i = 0; i < roads; i++) {
-                String line = sc.nextLine().trim();
-                String[] parts = line.split("\\s+");
-                graph.addEdge(parts[0], parts[1]);
+                int u = sc.nextInt();
+                int v = sc.nextInt();
+                graph.addEdge(u, v);
             }
 
             graph.printMatrix();
 
             // Traversals
-            GraphTraversal traversal = new GraphTraversal(graph);
-            System.out.print("\nEnter starting city for DFS & BFS: ");
-            String startCity = sc.nextLine().trim();
-            traversal.dfs(startCity);
-            traversal.bfs(startCity);
+            System.out.print("\nEnter starting city index for DFS & BFS: ");
+            int start = sc.nextInt();
+            graph.dfs(start);
+            graph.bfs(start);
 
             // Shortest path
-            ShortestPathFinder spf = new ShortestPathFinder(graph);
-            System.out.print("\nEnter source city for shortest path: ");
-            String srcCity = sc.nextLine().trim();
-            System.out.print("Enter destination city for shortest path: ");
-            String destCity = sc.nextLine().trim();
-            spf.shortestPath(srcCity, destCity);
-
-            sc.close();
+            System.out.print("\nEnter source city index for shortest path: ");
+            int src = sc.nextInt();
+            System.out.print("Enter destination city index for shortest path: ");
+            int dest = sc.nextInt();
+            graph.shortestPath(src, dest);
         }
     }
 }
